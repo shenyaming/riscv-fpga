@@ -1,0 +1,399 @@
+{
+   "dccm" : {
+      "offset" : "0x80000",
+      "region" : "0xf",
+      "size" : "0x8000"
+   },
+   "load_error_rollback" : "1",
+   "store_error_rollback" : "0",
+   "nmi_vec" : "0x11110000",
+   "max_mmode_perf_event" : "50",
+   "pic" : {
+      "size" : "0x8000",
+      "mpiccfg_offset" : "0x3000",
+      "meigwclr_offset" : "0x5000",
+      "meipl_offset" : "0x0000",
+      "total_int" : 8,
+      "offset" : "0x100000",
+      "bits" : 15,
+      "region" : "0xf",
+      "meipt_offset" : "0x3004",
+      "int_words" : 1,
+      "meigwctrl_offset" : "0x4000",
+      "meie_offset" : "0x2000",
+      "total_int_plus1" : 9,
+      "meip_offset" : "0x1000"
+   },
+   "even_odd_trigger_chains" : "true",
+   "num_mmode_perf_regs" : "4",
+   "triggers" : [
+      {
+         "reset" : [
+            "0x23e00000",
+            "0x00000000",
+            "0x00000000"
+         ],
+         "mask" : [
+            "0x081818c7",
+            "0xffffffff",
+            "0x00000000"
+         ],
+         "poke_mask" : [
+            "0x081818c7",
+            "0xffffffff",
+            "0x00000000"
+         ]
+      },
+      {
+         "poke_mask" : [
+            "0x081818c7",
+            "0xffffffff",
+            "0x00000000"
+         ],
+         "mask" : [
+            "0x081818c7",
+            "0xffffffff",
+            "0x00000000"
+         ],
+         "reset" : [
+            "0x23e00000",
+            "0x00000000",
+            "0x00000000"
+         ]
+      },
+      {
+         "mask" : [
+            "0x081818c7",
+            "0xffffffff",
+            "0x00000000"
+         ],
+         "poke_mask" : [
+            "0x081818c7",
+            "0xffffffff",
+            "0x00000000"
+         ],
+         "reset" : [
+            "0x23e00000",
+            "0x00000000",
+            "0x00000000"
+         ]
+      },
+      {
+         "reset" : [
+            "0x23e00000",
+            "0x00000000",
+            "0x00000000"
+         ],
+         "poke_mask" : [
+            "0x081818c7",
+            "0xffffffff",
+            "0x00000000"
+         ],
+         "mask" : [
+            "0x081818c7",
+            "0xffffffff",
+            "0x00000000"
+         ]
+      }
+   ],
+   "harts" : 1,
+   "reset_vec" : "0x0",
+   "csr" : {
+      "pmpaddr10" : {
+         "exists" : "false"
+      },
+      "mcpc" : {
+         "exists" : "true",
+         "mask" : "0x0",
+         "number" : "0x7c2",
+         "reset" : "0x0"
+      },
+      "mip" : {
+         "exists" : "true",
+         "poke_mask" : "0x40000888",
+         "mask" : "0x0",
+         "reset" : "0x0"
+      },
+      "mhpmcounter6h" : {
+         "exists" : "true",
+         "mask" : "0xffffffff",
+         "reset" : "0x0"
+      },
+      "pmpaddr4" : {
+         "exists" : "false"
+      },
+      "mhpmcounter3h" : {
+         "reset" : "0x0",
+         "mask" : "0xffffffff",
+         "exists" : "true"
+      },
+      "pmpcfg3" : {
+         "exists" : "false"
+      },
+      "dcsr" : {
+         "reset" : "0x40000003",
+         "mask" : "0x00008c04",
+         "poke_mask" : "0x00008dcc",
+         "exists" : "true"
+      },
+      "pmpaddr1" : {
+         "exists" : "false"
+      },
+      "pmpaddr9" : {
+         "exists" : "false"
+      },
+      "mfdc" : {
+         "reset" : "0x0",
+         "number" : "0x7f9",
+         "mask" : "0x000007ff",
+         "exists" : "true"
+      },
+      "dicad0" : {
+         "reset" : "0x0",
+         "number" : "0x7c9",
+         "debug" : "true",
+         "comment" : "Cache diagnostics.",
+         "mask" : "0xffffffff",
+         "exists" : "true"
+      },
+      "pmpaddr12" : {
+         "exists" : "false"
+      },
+      "pmpaddr14" : {
+         "exists" : "false"
+      },
+      "pmpaddr13" : {
+         "exists" : "false"
+      },
+      "pmpaddr3" : {
+         "exists" : "false"
+      },
+      "pmpaddr2" : {
+         "exists" : "false"
+      },
+      "mhpmevent5" : {
+         "reset" : "0x0",
+         "exists" : "true",
+         "mask" : "0xffffffff"
+      },
+      "mhpmevent6" : {
+         "reset" : "0x0",
+         "exists" : "true",
+         "mask" : "0xffffffff"
+      },
+      "mdccmect" : {
+         "number" : "0x7f2",
+         "reset" : "0x0",
+         "exists" : "true",
+         "mask" : "0xffffffff"
+      },
+      "mhpmcounter3" : {
+         "exists" : "true",
+         "mask" : "0xffffffff",
+         "reset" : "0x0"
+      },
+      "pmpaddr8" : {
+         "exists" : "false"
+      },
+      "time" : {
+         "exists" : "false"
+      },
+      "mie" : {
+         "mask" : "0x40000888",
+         "exists" : "true",
+         "reset" : "0x0"
+      },
+      "dmst" : {
+         "number" : "0x7c4",
+         "reset" : "0x0",
+         "comment" : "Memory synch trigger: Flush caches in debug mode.",
+         "debug" : "true",
+         "exists" : "true",
+         "mask" : "0x0"
+      },
+      "tselect" : {
+         "exists" : "true",
+         "mask" : "0x3",
+         "reset" : "0x0"
+      },
+      "mhpmcounter5" : {
+         "reset" : "0x0",
+         "mask" : "0xffffffff",
+         "exists" : "true"
+      },
+      "dicad1" : {
+         "exists" : "true",
+         "mask" : "0x3",
+         "comment" : "Cache diagnostics.",
+         "debug" : "true",
+         "number" : "0x7ca",
+         "reset" : "0x0"
+      },
+      "instret" : {
+         "exists" : "false"
+      },
+      "mhpmevent3" : {
+         "reset" : "0x0",
+         "mask" : "0xffffffff",
+         "exists" : "true"
+      },
+      "dicawics" : {
+         "number" : "0x7c8",
+         "reset" : "0x0",
+         "comment" : "Cache diagnostics.",
+         "debug" : "true",
+         "exists" : "true",
+         "mask" : "0x0130fffc"
+      },
+      "mpmc" : {
+         "mask" : "0x0",
+         "exists" : "true",
+         "comment" : "Core pause: Implemented as read only.",
+         "reset" : "0x0",
+         "number" : "0x7c6"
+      },
+      "mvendorid" : {
+         "reset" : "0x45",
+         "exists" : "true",
+         "mask" : "0x0"
+      },
+      "mhpmcounter4h" : {
+         "exists" : "true",
+         "mask" : "0xffffffff",
+         "reset" : "0x0"
+      },
+      "pmpaddr11" : {
+         "exists" : "false"
+      },
+      "pmpaddr6" : {
+         "exists" : "false"
+      },
+      "mimpid" : {
+         "exists" : "true",
+         "mask" : "0x0",
+         "reset" : "0x1"
+      },
+      "pmpaddr0" : {
+         "exists" : "false"
+      },
+      "pmpaddr7" : {
+         "exists" : "false"
+      },
+      "meicidpl" : {
+         "comment" : "External interrupt claim id priority level.",
+         "reset" : "0x0",
+         "number" : "0xbcb",
+         "mask" : "0xf",
+         "exists" : "true"
+      },
+      "pmpcfg0" : {
+         "exists" : "false"
+      },
+      "mstatus" : {
+         "reset" : "0x1800",
+         "exists" : "true",
+         "mask" : "0x88"
+      },
+      "meipt" : {
+         "mask" : "0xf",
+         "exists" : "true",
+         "reset" : "0x0",
+         "number" : "0xbc9",
+         "comment" : "External interrupt priority threshold."
+      },
+      "marchid" : {
+         "mask" : "0x0",
+         "exists" : "true",
+         "reset" : "0x0000000b"
+      },
+      "micect" : {
+         "reset" : "0x0",
+         "number" : "0x7f0",
+         "mask" : "0xffffffff",
+         "exists" : "true"
+      },
+      "miccmect" : {
+         "exists" : "true",
+         "mask" : "0xffffffff",
+         "number" : "0x7f1",
+         "reset" : "0x0"
+      },
+      "mhpmcounter5h" : {
+         "reset" : "0x0",
+         "exists" : "true",
+         "mask" : "0xffffffff"
+      },
+      "mhpmevent4" : {
+         "exists" : "true",
+         "mask" : "0xffffffff",
+         "reset" : "0x0"
+      },
+      "cycle" : {
+         "exists" : "false"
+      },
+      "meicpct" : {
+         "comment" : "External claim id/priority capture.",
+         "number" : "0xbca",
+         "reset" : "0x0",
+         "exists" : "true",
+         "mask" : "0x0"
+      },
+      "dicago" : {
+         "exists" : "true",
+         "mask" : "0x0",
+         "comment" : "Cache diagnostics.",
+         "debug" : "true",
+         "number" : "0x7cb",
+         "reset" : "0x0"
+      },
+      "pmpcfg1" : {
+         "exists" : "false"
+      },
+      "misa" : {
+         "exists" : "true",
+         "mask" : "0x0",
+         "reset" : "0x40001104"
+      },
+      "mhpmcounter6" : {
+         "exists" : "true",
+         "mask" : "0xffffffff",
+         "reset" : "0x0"
+      },
+      "pmpaddr5" : {
+         "exists" : "false"
+      },
+      "meicurpl" : {
+         "reset" : "0x0",
+         "number" : "0xbcc",
+         "comment" : "External interrupt current priority level.",
+         "mask" : "0xf",
+         "exists" : "true"
+      },
+      "pmpcfg2" : {
+         "exists" : "false"
+      },
+      "mhpmcounter4" : {
+         "mask" : "0xffffffff",
+         "exists" : "true",
+         "reset" : "0x0"
+      },
+      "mcgc" : {
+         "number" : "0x7f8",
+         "reset" : "0x0",
+         "exists" : "true",
+         "poke_mask" : "0x000001ff",
+         "mask" : "0x000001ff"
+      },
+      "pmpaddr15" : {
+         "exists" : "false"
+      }
+   },
+   "xlen" : 32,
+   "memmap" : {
+      "serialio" : "0xd0580000",
+      "external_data_1" : "0x00000000",
+      "external_prog" : "0xb0000000",
+      "external_data" : "0xc0580000",
+      "debug_sb_mem" : "0xb0580000"
+   }
+}

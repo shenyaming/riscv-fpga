@@ -1,0 +1,122 @@
+diff --git a/design/dmi/dmi_wrapper.v b/design/dmi/dmi_wrapper.v
+index 7d5df52..9d6704f 100644
+--- a/design/dmi/dmi_wrapper.v
++++ b/design/dmi/dmi_wrapper.v
+@@ -69,6 +69,7 @@ module dmi_wrapper(
+    assign dmireset = dmireset_OS;
+    assign dmi_hard_reset = dmi_hard_reset_OS;
+  
++    `ifdef VERILATOR
+  rvjtag_tap #(.DEVICE_ID_VAL(DEVICE_ID_VAL)) i_rvjtag_tap(
+    .scan_mode(scan_mode),
+    .trst(trst_n),                        // dedicated JTAG TRST (active low) pad signal or asynchronous active low power on reset
+@@ -90,31 +91,54 @@ module dmi_wrapper(
+    .dmi_hard_reset(dmi_hard_reset_OS),
+    .dmi_reset(dmireset_OS)
+ );
+-   
+- 
++    `else
++    wire user2_tck;
++    
++    jtag_user2 user2(   
++        .user2_tck ( user2_tck),
++        .idle(3'h0),
++        .dmi_stat(sts_opcod),
++        .abits(6'h20),
++        .version(4'h1),
++        .dmi_hard_reset(dmi_hard_reset_OS),
++        .dmi_reset(dmireset_OS)
++    );
++
++    jtag_user3 user3( 
++        .wr_data(j_wr_data_OS),                // 32 bit Write data
++        .wr_addr(j_wr_addr_OS),                // 32 bit Write address
++        .wr_intf(wr_intf_OS),                  // 1 bit  Write interface bit
++        .wr_enab(wr_enab_OS),                  // 1 bit  Write enable
++        .rd_data(j_rd_data),                   // 32 bit Read data
++        .rd_status(sts_opcod)                  // 1 bit Read ack
++    ); 
++    `endif
++//  assign  trst_n = 1'b1;
++//  assign  tck    = 1;
++  
+   // dmi_jtag_to_core_sync instantiation
+   dmi_jtag_to_core_sync i_dmi_jtag_to_core_sync(
+-    .trst_n(trst_n),
+-    .dmireset(dmireset),
+-    .tck(tck),
+-    .wr_intf(wr_intf),                          // 1 bit  Write interface bit
+-    .wr_enab(wr_enab),                          // 1 bit  Write enable
+-    .j_wr_data(j_wr_data),                      // 32 bit Write data
+-    .j_wr_addr(j_wr_addr),                      // 32 bit Write address
++    .trst_n     (core_rst_n),
++    .dmireset   (dmireset),
++    .tck        (user2_tck),
++    .wr_intf    (wr_intf),                          // 1 bit  Write interface bit
++    .wr_enab    (wr_enab),                          // 1 bit  Write enable
++    .j_wr_data  (j_wr_data),                      // 32 bit Write data
++    .j_wr_addr  (j_wr_addr),                      // 32 bit Write address
+ 
+-    .j_rd_data(j_rd_data),                      // 32 bit Read data
+-    .opcod(sts_opcod),                         // Read ack synhcronized to TCK
++    .j_rd_data  (j_rd_data),                      // 32 bit Read data
++    .opcod      (sts_opcod),                         // Read ack synhcronized to TCK
+ 
+-    .core_rst_n(core_rst_n),
+-    .core_clk(core_clk),
++    .core_rst_n (core_rst_n),
++    .core_clk   (core_clk),
+     
+-    .c_rd_data(rd_data),                      // 32 bit Read data
+-    .c_rd_ack(reg_ack),                        // Read ack from core clock
++    .c_rd_data  (rd_data),                      // 32 bit Read data
++    .c_rd_ack   (reg_ack),                        // Read ack from core clock
+ 
+-    .c_wr_data(reg_wr_data),                      // 32 bit Write data
+-    .c_wr_addr(reg_wr_addr),                      // 32 bit Write address
+-    .reg_en(reg_en),                          // 1 bit  Write interface bit
+-    .reg_wr_en(reg_wr_en)                          // 1 bit  Write enable
++    .c_wr_data  (reg_wr_data),                      // 32 bit Write data
++    .c_wr_addr  (reg_wr_addr),                      // 32 bit Write address
++    .reg_en     (reg_en),                          // 1 bit  Write interface bit
++    .reg_wr_en  (reg_wr_en)                          // 1 bit  Write enable
+   );
+ 
+ endmodule
+diff --git a/design/dmi/rvjtag_tap.sv b/design/dmi/rvjtag_tap.sv
+index 6e0ee4e..2c1b4da 100644
+--- a/design/dmi/rvjtag_tap.sv
++++ b/design/dmi/rvjtag_tap.sv
+@@ -163,7 +163,9 @@ always @ (negedge tck or negedge trst) begin
+    end
+ end
+ 
+-
++///////////////////////////////////////////////////////
++//                      Instruction Decoder
++///////////////////////////////////////////////////////
+ assign devid_sel  = ir == 5'b00001;
+ assign dr_en[0]   = ir == 5'b10000;
+ assign dr_en[1]   = ir == 5'b10001;
+diff --git a/design/lib/beh_lib.sv b/design/lib/beh_lib.sv
+index ba01eca..6c432d3 100644
+--- a/design/lib/beh_lib.sv
++++ b/design/lib/beh_lib.sv
+@@ -94,6 +94,16 @@ module `TEC_RV_ICG
+    end
+ `endif
+    assign Q = CP & en_ff;
++//   BUFGCE #(
++//      .CE_TYPE("SYNC"),      // ASYNC, SYNC
++//      .IS_CE_INVERTED(1'b0), // Programmable inversion on CE
++//      .IS_I_INVERTED(1'b0)   // Programmable inversion on I
++//   )
++//   BUFGCE_inst (
++//      .O(Q),   // 1-bit output: Buffer
++//      .CE(en_ff), // 1-bit input: Buffer enable
++//      .I(CP)    // 1-bit input: Buffer
++//   );
+ 
+ endmodule
+ 
